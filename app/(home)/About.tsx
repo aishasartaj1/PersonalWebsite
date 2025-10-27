@@ -38,13 +38,13 @@ export function About() {
           <div className="space-y-6 md:col-span-2">
             <Card>
               <p className="mb-4 text-lg leading-relaxed text-ink-2">
-                I'm an AI/ML engineer passionate about building human-centered systems that blend
-                intelligence with empathy. My work spans emotion-aware pipelines, multi-agent
-                tutoring systems, and scalable data platforms.
+              I'm an AI Engineer pursuing my Master of Engineering in Data Science at UCLA (GPA: 3.75/4.00, expected Dec 2025). I specialize in building production-grade AI systems with a focus on LLM engineering, multi-agent architectures, and MLOps.
+              </p>
+              <p className="mb-4 text-lg leading-relaxed text-ink-2">
+              Currently, I'm architecting a multi-agent AI tutoring system at ILMAscent, leveraging LangGraph for state-based orchestration and AWS Bedrock for scalable LLM deployment. My work spans advanced RAG pipelines, model optimization, and building human-centered AI applications.
               </p>
               <p className="text-lg leading-relaxed text-ink-2">
-                I believe the most powerful technology is the kind that amplifies human potential
-                while remaining accessible, interpretable, and kind.
+              Previously at Fractal Analytics, I prototyped GenAI solutions and built robust data pipelines that scaled client revenue from $75K to nearly $500K. I'm passionate about creating intelligent systems that blend technical excellence with real-world impact.
               </p>
             </Card>
 

@@ -20,6 +20,11 @@ export function getStoredTheme(): Theme | null {
 export function setStoredTheme(theme: Theme): void {
   localStorage.setItem('theme', theme);
   document.documentElement.setAttribute('data-theme', theme);
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
 }
 
 export function useTheme() {
@@ -32,6 +37,11 @@ export function useTheme() {
     const initial = stored || getSystemTheme();
     setTheme(initial);
     document.documentElement.setAttribute('data-theme', initial);
+    if (initial === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
 
     // Listen for system theme changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -40,6 +50,11 @@ export function useTheme() {
         const newTheme = e.matches ? 'dark' : 'light';
         setTheme(newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
+        if (newTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
       }
     };
 

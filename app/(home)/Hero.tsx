@@ -3,13 +3,33 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, FileText } from 'lucide-react';
-import NorthernAurora from '@/components/NorthernAurora';
+import NorthernAuroraLight from '@/components/NorthernAuroraLight';
+import NorthernAuroraDark from '@/components/NorthernAuroraDark';
 
 export function Hero() {
   const [auroraVariant, setAuroraVariant] = useState<'northern' | 'brown'>('brown');
+  const [themeMode, setThemeMode] = useState<'light' | 'dark'>('dark');
   const layer1Ref = useRef<HTMLDivElement>(null);
   const layer2Ref = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
+
+  // Detect theme mode from document
+  useEffect(() => {
+    const detectTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setThemeMode(isDark ? 'dark' : 'light');
+    };
+    
+    detectTheme();
+    // Watch for both class and attribute changes
+    const observer = new MutationObserver(detectTheme);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['class', 'data-theme'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (prefersReduced) return;
@@ -43,7 +63,11 @@ export function Hero() {
       aria-label="Intro"
     >
       {/* Northern Aurora Background - full screen */}
-      <NorthernAurora variant={auroraVariant} />
+      {themeMode === 'light' ? (
+        <NorthernAuroraLight key={`light-${auroraVariant}`} variant={auroraVariant} />
+      ) : (
+        <NorthernAuroraDark key={`dark-${auroraVariant}`} variant={auroraVariant} />
+      )}
       
       {/* OLD CODE - Original subtle blush gradient background - COMMENTED OUT */}
       {/* <div className="absolute inset-0 bg-gradient-to-b from-blush-300/20 via-transparent to-transparent" /> */}
@@ -71,7 +95,7 @@ export function Hero() {
       {/* Content */}
       <div className="relative mx-auto w-full max-w-5xl text-center">
         <span
-          className="inline-block rounded-2xl border border-[#E5C3A1] bg-[#FFF6EF] px-4 py-2 text-sm font-medium text-[#4B3E2E] shadow-[0_2px_6px_rgba(226,174,136,0.3)] dark:border-blush-400 dark:bg-blush-400/20 dark:text-blush-300 dark:shadow-[0_2px_6px_rgba(232,180,162,0.2)]"
+          className="inline-block rounded-2xl border border-[#E5C3A1] bg-[#FFF6EF] px-4 py-2 text-sm font-medium text-[#3A2315] shadow-[0_2px_6px_rgba(201,122,64,0.25)] dark:border-blush-400/60 dark:bg-blush-400/40 dark:text-[#F8F5F2] dark:shadow-[0_4px_12px_rgba(227,184,135,0.2)] dark:backdrop-blur-sm"
           aria-label="Professional focus"
         >
           AI/ML Engineer Enthusiast
@@ -81,7 +105,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.0, ease: 'easeOut', delay: 0.05 }}
-          className="mt-6 font-serif text-5xl font-bold leading-tight tracking-tight text-[#2E251B] md:text-7xl dark:text-[#F5EDE4]"
+          className="mt-6 font-serif text-5xl font-bold leading-tight tracking-tight text-[#3A2315] md:text-7xl dark:text-[#F8F5F2]"
         >
           Aisha Sartaj
         </motion.h1>
@@ -90,7 +114,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.0, ease: 'easeOut', delay: 0.15 }}
-          className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[rgba(0,0,0,0.65)] dark:text-[#D4C8BC]"
+          className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-[#7A5F4A] dark:text-[#C6B3A3]"
         >
           — Exploring intelligence, empathy, and creativity through code.
         </motion.p>
@@ -103,7 +127,7 @@ export function Hero() {
         >
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 rounded-2xl bg-[#D58973] px-6 py-3 font-medium text-white shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D2691E] no-underline dark:bg-blush-400"
+            className="inline-flex items-center gap-2 rounded-2xl bg-[#C97A40] px-6 py-3 font-medium text-white shadow-soft transition-all hover:bg-[#E3B887] hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C97A40] no-underline dark:bg-[#C97A40] dark:hover:bg-[#E3B887]"
           >
             View My Work
           </a>
@@ -111,7 +135,7 @@ export function Hero() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl bg-[#F4E7D9] px-6 py-3 font-medium text-[#4B3E2E] shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D2691E] no-underline dark:bg-card dark:text-ink-2 dark:border dark:border-border"
+            className="inline-flex items-center gap-2 rounded-2xl bg-[#F5E4CB] px-6 py-3 font-medium text-[#3A2315] shadow-soft transition-all hover:bg-[#E3C49C] hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C97A40] no-underline dark:bg-[#3B231B] dark:text-[#F8F5F2] dark:hover:bg-[#4A2C22] dark:border dark:border-border"
           >
             <FileText className="h-4 w-4" />
             Resume
@@ -120,7 +144,7 @@ export function Hero() {
             href="https://github.com/aishasartaj1"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl bg-[#F4E7D9] px-6 py-3 font-medium text-[#4B3E2E] shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D2691E] no-underline dark:bg-card dark:text-ink-2 dark:border dark:border-border"
+            className="inline-flex items-center gap-2 rounded-2xl bg-[#F5E4CB] px-6 py-3 font-medium text-[#3A2315] shadow-soft transition-all hover:bg-[#E3C49C] hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C97A40] no-underline dark:bg-[#3B231B] dark:text-[#F8F5F2] dark:hover:bg-[#4A2C22] dark:border dark:border-border"
           >
             <Github className="h-4 w-4" />
             GitHub
@@ -129,7 +153,7 @@ export function Hero() {
             href="https://www.linkedin.com/in/aisha-sartaj-23671a195/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-2xl bg-[#F4E7D9] px-6 py-3 font-medium text-[#4B3E2E] shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D2691E] no-underline dark:bg-card dark:text-ink-2 dark:border dark:border-border"
+            className="inline-flex items-center gap-2 rounded-2xl bg-[#F5E4CB] px-6 py-3 font-medium text-[#3A2315] shadow-soft transition-all hover:bg-[#E3C49C] hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C97A40] no-underline dark:bg-[#3B231B] dark:text-[#F8F5F2] dark:hover:bg-[#4A2C22] dark:border dark:border-border"
           >
             <Linkedin className="h-4 w-4" />
             LinkedIn
